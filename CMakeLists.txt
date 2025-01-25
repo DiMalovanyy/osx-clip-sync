@@ -18,7 +18,9 @@ else()
 endif()
 
 set(SOURCES
-    src/pbpoll.mm)
+    src/main.mm
+    src/OsxClipboard.mm
+)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

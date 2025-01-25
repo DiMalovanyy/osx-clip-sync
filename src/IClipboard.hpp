@@ -26,10 +26,12 @@ public:
             throw std::runtime_error("Missed clipboard data");
         }
     }
+    virtual void SetData(const std::string& newData) = 0;
 
     virtual void SetClipboardDataChangedCb(DataChangeCbT onDataChangedCb) {
         onDataChangedCb_ = onDataChangedCb;
     }
+
 private:
     std::optional<std::string> data_;
 protected:

@@ -17,8 +17,9 @@ struct CFDeleter {
 
 class OsxClipboard final: public IClipboard {
 public:
-    OsxClipboard(boost::asio::io_context::strand& strand);
+    OsxClipboard(boost::asio::io_context::strand& strand, std::chrono::duration<long long> pollTime = std::chrono::seconds(1));
 
+    void SetData(const std::string& newData) override;
     void AsyncPoll() override;
 
 private:
@@ -28,6 +29,7 @@ private:
     std::optional<std::string> data_;
     
     std::unique_ptr<PasteboardRef, CFDeleter> pasteboard_;
+    boost::asio::steady_timer pollTimer_;
 };
 
 
