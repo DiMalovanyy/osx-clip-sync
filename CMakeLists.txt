@@ -17,12 +17,33 @@ else()
     message(FATAL_ERROR "Boost not found!")
 endif()
 
+find_package(X11 REQUIRED)
+
 set(SOURCES
     src/main.mm
     src/OsxClipboard.mm
+    src/X11Clipboard.mm
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${ApplicationServices_FRAMEWORK} ${CoreFoundation_FRAMEWORK} ${Boost_LIBRARIES})
-target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    ${ApplicationServices_FRAMEWORK} 
+    ${CoreFoundation_FRAMEWORK}
+    ${Boost_LIBRARIES}
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE 
+    ${Boost_INCLUDE_DIRS}
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    X11::X11
+    X11::Xfixes
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE 
+    ${X11_X11_INCLUDE_PATH}
+    ${X11_Xfixes_INCLUDE_PATH}
+)
+
